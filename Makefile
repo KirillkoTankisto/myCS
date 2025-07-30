@@ -16,8 +16,6 @@ C = @echo -n $(C_prefix)
 L_PREFIX = ":LL: "
 L = @echo -n $(L_PREFIX)
 
-all: $(LIB_DIR)/libmyCS.a out/main
-
 $(LIB_DIR)/libmyCS.a: src/myCS/myCS.c include/myCS.h
 	$L
 	mkdir $(LIB_DIR) $(BUILD_DIR)
@@ -26,7 +24,7 @@ $(LIB_DIR)/libmyCS.a: src/myCS/myCS.c include/myCS.h
 	$L
 	$(AR) $(AR_ARGS) $@ $(BUILD_DIR)/myCS.o
 
-out/main: src/example/main.c  $(LIB_DIR)/libmyCS.a
+$(OUT_DIR)/main: src/example/main.c  $(LIB_DIR)/libmyCS.a
 	$C
 	mkdir $(OUT_DIR)
 	$C	
@@ -38,3 +36,10 @@ out/main: src/example/main.c  $(LIB_DIR)/libmyCS.a
 
 clean:
 	rm -rf $(LIB_DIR) $(BUILD_DIR) $(OUT_DIR)
+
+install: $(LIB_DIR)/libmyCS.a
+	cp $(LIB_DIR)/libmyCS.a /usr/local/lib/
+	cp include/myCS.h /usr/local/include/
+
+uninstall: /usr/local/lib/libmyCS.a /usr/local/include/myCS.h
+	sudo rm /usr/local/lib/libmyCS.a /usr/local/include/myCS.h
