@@ -17,3 +17,5 @@
 3) **str_to_long_long** - I think you got it.
 4) **str_to_float** - **YES**
 5) **str_to_double** - **AND THIS TOO**
+6) **println** - printf with a newline
+7) **true** and **false**
