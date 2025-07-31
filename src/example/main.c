@@ -10,7 +10,7 @@
 int game1(int argc, string *argv) {
 
   string name;
-  void *allocated_name;
+  void *allocated_name = NULL;
 
   if (argc < 2) {
     string allocated_name = get_string("What's your name?", 32);
@@ -95,6 +95,8 @@ void test(void) {
 }
 
 int main(int argc, string *argv) {
+  test();
+  
   game1(argc, argv);
 
   if (errno != 0) {

@@ -88,7 +88,6 @@ int str_to_int(const string str) {
   int num = strtol(str, &tail, 10);
 
   if (str == tail || *tail != '\0') {
-    free(tail);
     errno = EINVAL;
 
     return 0;
@@ -131,7 +130,6 @@ long str_to_long(const string str) {
   long num = strtol(str, &tail, 10);
 
   if (str == tail || *tail != '\0') {
-    free(tail);
     errno = EINVAL;
 
     return 0;
@@ -169,7 +167,6 @@ long long str_to_long_long(const string str) {
   long long num = strtoll(str, &tail, 10);
 
   if (str == tail || *tail != '\0') {
-    free(tail);
     errno = EINVAL;
 
     return 0;
@@ -207,14 +204,13 @@ float str_to_float(const string str) {
   float num = strtof(str, &tail);
 
   if (str == tail || *tail != '\0') {
-    free(tail);
     errno = EINVAL;
 
-    return 0;
+    return 0.0f;
   };
 
   if (errno == ERANGE) {
-    return 0;
+    return 0.0f;
   };
 
   return num;
@@ -245,7 +241,6 @@ double str_to_double(const string str) {
   double num = strtod(str, &tail);
 
   if (str == tail || *tail != '\0') {
-    free(tail);
     errno = EINVAL;
 
     return 0;

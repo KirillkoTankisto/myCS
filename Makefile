@@ -1,5 +1,5 @@
 СOMPILER = musl-clang
-C_ARGS = -O3 -pedantic -static -Wno-unused-command-line-argument -mtune=skylake -march=skylake -Iinclude
+C_ARGS = -O3 -pedantic -static -Wall -Wextra -Wno-unused-command-line-argument -Iinclude
 AR = ar
 AR_ARGS = rcs
 LIB_DIR = lib
