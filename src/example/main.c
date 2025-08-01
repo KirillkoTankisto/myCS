@@ -54,7 +54,7 @@ int game2(void) {
 int game3(void) {
   println("A. Hello World\nB. 1234567890");
 
-  char character = get_char("Choose an option.");
+  char character = get_char("Choose an option.", 32);
 
   if (errno != 0) {
     return 0;

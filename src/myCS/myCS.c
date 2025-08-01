@@ -47,16 +47,17 @@ string get_string(const string prompt, int buffer_size) {
   return buffer;
 }
 
-char get_char(const string prompt) {
-  println("%s", prompt);
+char get_char(const string prompt, int buffer_size) {
+  string str = get_string(prompt, buffer_size);
 
-  char character = fgetc(stdin);
+  if (strlen(str) != 1) {
+    free(str);
+    errno = EINVAL;
 
-  if (errno != 0) {
     return 0;
   }
 
-  return character;
+  return str[0];
 }
 
 int get_int(const string prompt, int buffer_size) {

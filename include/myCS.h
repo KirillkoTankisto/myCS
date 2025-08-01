@@ -8,7 +8,7 @@ int println(const string format, ...);
 
 string get_string(const string prompt, int buffer_size);
 
-char get_char(const string prompt);
+char get_char(const string prompt, int buffer_size);
 
 int get_int(const string prompt, int buffer_size);
 
