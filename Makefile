@@ -1,5 +1,5 @@
 СOMPILER = musl-clang
-C_ARGS = -O3 -pedantic -static -Wall -Wextra -Wno-unused-command-line-argument -Iinclude
+C_ARGS = -O3 -pedantic -static -Wall -Wextra -Wno-unused-command-line-argument -Iinclude -flto=full
 AR = ar
 AR_ARGS = rcs
 LIB_DIR = lib

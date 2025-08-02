@@ -1,13 +1,5 @@
 #include "../../include/myCS.h"
 
-#include <errno.h>
-#include <inttypes.h>
-#include <limits.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 int println(const string format, ...) {
 
   va_list args;
@@ -28,27 +20,81 @@ int println(const string format, ...) {
   return chars_printed + 1;
 }
 
-string get_string(const string prompt, int buffer_size) {
+string get_string(const string format, ...) {
+  va_list args;
+  va_start(args, format);
 
-  println("%s", prompt);
+  return vget_string(format, args);
+}
 
-  string buffer = malloc(buffer_size);
+string vget_string(const string format, va_list args) {
+  if (format) {
+    if (vprintf(format, args) < 0) {
+      return NULL;
+    }
 
-  if (!buffer)
-    return NULL;
+    fflush(stdout);
+  }
 
-  if (!fgets(buffer, buffer_size, stdin)) {
-    free(buffer);
+  string str = NULL;
+
+  size_t capacity = 0;
+
+  size_t size = 0;
+
+  char c;
+
+  while ((c = fgetc(stdin)) != '\n' && c != EOF) {
+    if (size + 1 > capacity) {
+      if (capacity == SIZE_MAX) {
+        free(str);
+        return NULL;
+      }
+
+      capacity++;
+
+      string temp = realloc(str, capacity);
+
+      if (!temp) {
+        free(str);
+        return NULL;
+      }
+
+      str = temp;
+    }
+
+    str[size++] = c;
+  }
+
+  if (size == 0 && c == EOF) {
+    free(str);
     return NULL;
   };
 
-  buffer[strcspn(buffer, "\n")] = '\0';
+  if (size == SIZE_MAX) {
+    free(str);
+    return NULL;
+  }
 
-  return buffer;
+  string s = realloc(str, size + 1);
+
+  if (!s) {
+    free(str);
+    return NULL;
+  };
+
+  s[size] = '\0';
+
+  return s;
 }
 
-char get_char(const string prompt, int buffer_size) {
-  string str = get_string(prompt, buffer_size);
+char get_char(const string format, ...) {
+  va_list args;
+  va_start(args, format);
+
+  string str = vget_string(format, args);
+
+  va_end(args);
 
   if (strlen(str) != 1) {
     free(str);
@@ -60,9 +106,13 @@ char get_char(const string prompt, int buffer_size) {
   return str[0];
 }
 
-int get_int(const string prompt, int buffer_size) {
+int get_int(const string format, ...) {
+  va_list args;
+  va_start(args, format);
 
-  string str = get_string(prompt, buffer_size);
+  string str = vget_string(format, args);
+
+  va_end(args);
 
   if (str == NULL) {
     free(str);
@@ -106,9 +156,13 @@ int str_to_int(const string str) {
   return num;
 }
 
-long get_long(const string prompt, int buffer_size) {
+long get_long(const string format, ...) {
+  va_list args;
+  va_start(args, format);
 
-  string str = get_string(prompt, buffer_size);
+  string str = vget_string(format, args);
+
+  va_end(args);
 
   if (str == NULL) {
     free(str);
@@ -143,9 +197,13 @@ long str_to_long(const string str) {
   return num;
 }
 
-long long get_long_long(const string prompt, int buffer_size) {
+long long get_long_long(const string format, ...) {
+  va_list args;
+  va_start(args, format);
 
-  string str = get_string(prompt, buffer_size);
+  string str = vget_string(format, args);
+
+  va_end(args);
 
   if (str == NULL) {
     free(str);
@@ -180,9 +238,13 @@ long long str_to_long_long(const string str) {
   return num;
 }
 
-float get_float(const string prompt, int buffer_size) {
+float get_float(const string format, ...) {
+  va_list args;
+  va_start(args, format);
 
-  string str = get_string(prompt, buffer_size);
+  string str = vget_string(format, args);
+
+  va_end(args);
 
   if (str == NULL) {
     free(str);
@@ -217,9 +279,13 @@ float str_to_float(const string str) {
   return num;
 }
 
-double get_double(const string prompt, int buffer_size) {
+double get_double(const string format, ...) {
+  va_list args;
+  va_start(args, format);
 
-  string str = get_string(prompt, buffer_size);
+  string str = vget_string(format, args);
+
+  va_end(args);
 
   if (str == NULL) {
     free(str);

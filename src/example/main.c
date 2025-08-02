@@ -13,7 +13,7 @@ int game1(int argc, string *argv) {
   void *allocated_name = NULL;
 
   if (argc < 2) {
-    string allocated_name = get_string("What's your name?", 32);
+    string allocated_name = get_string("What's your name?\n", NULL);
     if (errno != 0) {
       return errno;
     }
@@ -91,12 +91,12 @@ void test(void) {
 
   double e = str_to_double("500.0");
 
-  println("a = %i\nb = %i\nc = %i\nd = %f\ne = %f", a, b, c, d, e);
+  println("a = %i\nb = %i\nc = %i\nd = %f\ne = %f\n", a, b, c, d, e);
 }
 
 int main(int argc, string *argv) {
   test();
-  
+
   game1(argc, argv);
 
   if (errno != 0) {
